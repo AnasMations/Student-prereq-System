@@ -1,0 +1,10 @@
+101Introduction to Programming	None
+207Fundamental of Data Structures & Algorithms	101Introduction to Programming
+311Computer Architecture	101Introduction to Programming
+217Advanced Computer Programming & Concepts	207Fundamental of Data Structures & Algorithms
+313Software Engineering	311Computer Architecture
+415Compiler Design	311Computer Architecture
+304Analysis and Design of Algorithms	217Advanced Computer Programming & Concepts
+419Theory of Computing	217Advanced Computer Programming & Concepts
+315Operating Systems	313Software Engineering
+404Database Systems	313Software Engineering
