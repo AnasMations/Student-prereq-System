@@ -8,7 +8,6 @@ using namespace std;
 //Binary tree node
 class node{
 public:
-
     int key;
     node *left;
     node *right;
@@ -28,7 +27,7 @@ public:
     BST()
     {
         root = NULL;
-        cout<<"Tree has been created!"<<endl;
+        cout<<"Tree has been declared!"<<endl;
     }
 
     void construct_tree(vector<int> col1, vector<int> col2)
@@ -38,7 +37,9 @@ public:
             //insert at root
             if(col2[i] == 0)
             {
-                root->key = col1[i];
+                node *temp = new node();
+                temp->key = col1[i];
+                root = temp;
             }else
             {
                 node *newNode = new node();
@@ -59,33 +60,16 @@ public:
         cout<<"Tree has been constructed!"<<endl;
     }
 
+    //Function to search the whole binary tree
     node* Search(node* root, int key)
     {
         // Base Cases: root is null or key is present at root
         if (root == NULL || root->key == key)
            return root;
 
-        // Key is greater than root's key
-        if (root->key < key)
-           return Search(root->right, key);
-
-        // Key is smaller than root's key
-        return Search(root->left, key);
-    }
-
-    void Inorder(node* root)
-    {
-        if (!root) {
-            return;
-        }
-        Inorder(root->left);
-        cout << root->key << endl;
-        Inorder(root->right);
-    }
-
-    void print()
-    {
-        cout<<"NICE";
+        node* x = Search(root->right, key);
+        if(x != NULL) return x;
+        Search(root->left, key);
     }
 };
 
@@ -158,12 +142,9 @@ int main()
     column1 = change_to_int(column1_str);
     column2 = change_to_int(column2_str);
 
-    cout<<column1[9];
-
     //Form Binary Search Tree
     BST tree;
     tree.construct_tree(column1, column2);
-    tree.Inorder(tree.root);
-
+    cout<< tree.root->left->left->left->key;
 
 }
