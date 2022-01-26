@@ -1,6 +1,6 @@
 # Student-prereq-System
 
-Team:
-* Anas Ahmed Hassan
-* Antony Emil
-* Eslam Ahmed Mohamed
+Process:
+* Extract input from CSV file
+* Create binary tree
+* Create userinterface
