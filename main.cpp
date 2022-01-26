@@ -5,6 +5,90 @@
 #include <vector>
 using namespace std;
 
+//Binary tree node
+class node{
+public:
+
+    int key;
+    node *left;
+    node *right;
+
+    node()
+    {
+        key = 0;
+        left = NULL;
+        right = NULL;
+    }
+};
+
+class BST{
+public:
+    node *root = new node();
+
+    BST()
+    {
+        root = NULL;
+        cout<<"Tree has been created!"<<endl;
+    }
+
+    void construct_tree(vector<int> col1, vector<int> col2)
+    {
+        for(int i=0; i<col1.size(); i++)
+        {
+            //insert at root
+            if(col2[i] == 0)
+            {
+                root->key = col1[i];
+            }else
+            {
+                node *newNode = new node();
+                node *parentNode = new node();
+
+                newNode->key = col1[i];
+                parentNode = Search(root, col2[i]);
+
+                if(parentNode->left == NULL)
+                {
+                    parentNode->left = newNode;
+                }else
+                {
+                    parentNode->right = newNode;
+                }
+            }
+        }
+        cout<<"Tree has been constructed!"<<endl;
+    }
+
+    node* Search(node* root, int key)
+    {
+        // Base Cases: root is null or key is present at root
+        if (root == NULL || root->key == key)
+           return root;
+
+        // Key is greater than root's key
+        if (root->key < key)
+           return Search(root->right, key);
+
+        // Key is smaller than root's key
+        return Search(root->left, key);
+    }
+
+    void Inorder(node* root)
+    {
+        if (!root) {
+            return;
+        }
+        Inorder(root->left);
+        cout << root->key << endl;
+        Inorder(root->right);
+    }
+
+    void print()
+    {
+        cout<<"NICE";
+    }
+};
+
 //Extracts two columns from the given CSV file
 void extract_columns(string fileName, vector<string> &column1, vector<string> &column2)
 {
@@ -75,5 +159,11 @@ int main()
     column2 = change_to_int(column2_str);
 
     cout<<column1[9];
+
+    //Form Binary Search Tree
+    BST tree;
+    tree.construct_tree(column1, column2);
+    tree.Inorder(tree.root);
+
 
 }
