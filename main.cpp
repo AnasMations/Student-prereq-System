@@ -3,18 +3,21 @@
 #include <sstream>
 #include <string>
 #include <vector>
+#include<bits/stdc++.h>
 using namespace std;
 
 //Binary tree node
 class node{
 public:
     int key;
+    bool isStudied;
     node *left;
     node *right;
 
     node()
     {
         key = 0;
+        isStudied = false;
         left = NULL;
         right = NULL;
     }
@@ -71,6 +74,14 @@ public:
         if(x != NULL) return x;
         Search(root->left, key);
     }
+
+    //Function to check whether this course is allowed to be taken or not
+    bool check_course(int parent)
+    {
+        node* temp = Search(root, parent);
+        if (temp->isStudied) return true;
+        return false;
+    }
 };
 
 //Extracts two columns from the given CSV file
@@ -108,7 +119,7 @@ bool is_number(string str)
 {
     for (char const &c : str)
     {
-        if (std::isdigit(c) == 0) return false;
+        if (isdigit(c) == 0) return false;
     }
     return true;
 }
@@ -132,6 +143,26 @@ vector<int> change_to_int(vector<string> column_str)
     return column_int;
 }
 
+int getIndex(vector<int> v, int K)
+{
+    auto it = find(v.begin(), v.end(), K);
+
+    // If element was found
+    if (it != v.end())
+    {
+
+        // calculating the index
+        // of K
+        int index = it - v.begin();
+        return index;
+    }
+    else {
+        // If the element is not
+        // present in the vector
+        return -1;
+    }
+}
+
 int main()
 {
     vector<string> column1_str, column2_str;
@@ -145,6 +176,59 @@ int main()
     //Form Binary Search Tree
     BST tree;
     tree.construct_tree(column1, column2);
-    cout<< tree.root->left->left->left->key;
+
+    cout<<endl;
+
+    //User Interface
+    string userInput;
+
+    cout<<"Enter the courses which you already studied (enter 0 when done):"<<endl;
+    while(true)
+    {
+        cout<<"Enter course: ";
+        cin>>userInput;
+        if(userInput=="0") break;
+        tree.Search( tree.root, stoi(userInput.substr(0, 3)) )->isStudied = true;
+    }
+
+    cout<<endl;
+
+    vector<string> okCourses, notOkCourses;
+
+    cout<<"Enter the courses you want to study (enter 0 when done):"<<endl;
+    while(true)
+    {
+        cout<<"Enter course: ";
+        cin>>userInput;
+        if(userInput=="0") break;
+        int i = getIndex(column1 ,stoi(userInput.substr(0, 3)));
+        if(tree.check_course(column2[i]))
+        {
+            //course ok to take
+            okCourses.push_back(column1_str[i]);
+        }else
+        {
+            //courses not ok to take
+            notOkCourses.push_back(column1_str[i]);
+        }
+
+    }
+
+    cout<<endl;
+
+    cout<<"The following courses are OK to take:"<<endl;
+    for(int i=0; i<okCourses.size(); i++)
+    {
+        cout<<okCourses[i]<<endl;
+    }
+
+    cout<<endl;
+
+    cout<<"The following courses CANNOT be taken:"<<endl;
+    for(int i=0; i<notOkCourses.size(); i++)
+    {
+        cout<<notOkCourses[i]<<endl;
+    }
+
 
 }
