@@ -78,6 +78,7 @@ public:
     //Function to check whether this course is allowed to be taken or not
     bool check_course(int parent)
     {
+        if(parent==0) return true;
         node* temp = Search(root, parent);
         if (temp->isStudied) return true;
         return false;
