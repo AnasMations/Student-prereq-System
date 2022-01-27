@@ -30,7 +30,6 @@ public:
     BST()
     {
         root = NULL;
-        cout<<"Tree has been declared!"<<endl;
     }
 
     void construct_tree(vector<int> col1, vector<int> col2)
@@ -51,6 +50,7 @@ public:
                 newNode->key = col1[i];
                 parentNode = Search(root, col2[i]);
 
+                //if left is not empty, insert at left
                 if(parentNode->left == NULL)
                 {
                     parentNode->left = newNode;
@@ -143,6 +143,7 @@ vector<int> change_to_int(vector<string> column_str)
     return column_int;
 }
 
+//get index of an element from the vector
 int getIndex(vector<int> v, int K)
 {
     auto it = find(v.begin(), v.end(), K);
@@ -179,29 +180,30 @@ int main()
 
     cout<<endl;
 
-    //User Interface
+    //Input
     string userInput;
-
     cout<<"Enter the courses which you already studied (enter 0 when done):"<<endl;
     while(true)
     {
         cout<<"Enter course: ";
-        cin>>userInput;
+        getline(cin, userInput);
         if(userInput=="0") break;
+        //Mark inputed courses as studied
         tree.Search( tree.root, stoi(userInput.substr(0, 3)) )->isStudied = true;
     }
 
     cout<<endl;
 
     vector<string> okCourses, notOkCourses;
-
     cout<<"Enter the courses you want to study (enter 0 when done):"<<endl;
     while(true)
     {
         cout<<"Enter course: ";
-        cin>>userInput;
+        getline(cin, userInput);
         if(userInput=="0") break;
+        //get index of child in column 1
         int i = getIndex(column1 ,stoi(userInput.substr(0, 3)));
+        //check the parent from column 2 of the given index
         if(tree.check_course(column2[i]))
         {
             //course ok to take
@@ -216,6 +218,7 @@ int main()
 
     cout<<endl;
 
+    //Output
     cout<<"The following courses are OK to take:"<<endl;
     for(int i=0; i<okCourses.size(); i++)
     {
@@ -229,6 +232,5 @@ int main()
     {
         cout<<notOkCourses[i]<<endl;
     }
-
 
 }
